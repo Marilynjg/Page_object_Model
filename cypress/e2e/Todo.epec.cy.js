@@ -1,23 +1,26 @@
-/// <reference types="cypress" />
+import { todoPage } from '../page_objects/TodoPage';
 
-import { HomePage } from '../PaginaTodo/Homepage';
-import { AddTask } from '../PaginaTodo/practica_POM'
+describe('Agregar tareas', () => {
+  beforeEach(() => {
+    todoPage.visit();
+  });
 
-describe('test Add Task', () => {
-  const addTask= new AddTask()
-  const homePage= new HomePage()
-  beforeEach(()=>{
-    homePage.visitpage();
-  })
-    it('add task', () => {
-      addTask.addTaskPan();
-      addTask.addTaskNumbers();
-      addTask.addTaskSymbol();
-      addTask.addTaskEmoji();
-      });
-      it('check task ',()=>{
-        addTask.checkTask();
-        addTask.uncheckTask();
-      })
-})//ultimo
+  it('Agregar tarea a la lista', () => {
+    todoPage.addTask('Tarea 1');
+    todoPage.verifyTaskInList('Tarea 1');
+  });
+
+  it('Marcar tarea como completada', () => {
+    todoPage.addTask('Tarea 1');
+    todoPage.verifyTaskInList('Tarea 1');
+    todoPage.toggleTask();
+  });
+
+  it('Borrar tarea completada con función Clear Completed', () => {
+    todoPage.addTask('Tarea 1');
+    todoPage.verifyTaskInList('Tarea 1');
+    todoPage.toggleTask();
+    todoPage.clearCompleted();
+  });
+});
 
